@@ -1,8 +1,30 @@
 <div class="jumbotron">
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <h1>Hello, {{ user.name }}</h1>
+        <p>Your email is {{ user.email }}</p>
+
+        {{#if user.isAdmin}}
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Admin login</a></p>
+        {{/if}}
+
+        {{!--if shows only if isAdmin is truthy. unless shows when it is false--}}
+
+        {{#unless user.isAdmin}}
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">User login</a></p>
+        {{/unless}}
+
     </div>
 </div>
-<h2>From index.handlebars</h2>
+
+<div class="container">
+  {{> blogform }}
+
+  <ul>
+    {{#each blogs as |blog|}}
+    <li>
+      <h3> {{blog.title}} <h3>
+      <p> {{blog.content}} </p>
+    </li>
+    {{/each}}
+  </ul>
+</div>

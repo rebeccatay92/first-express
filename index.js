@@ -7,15 +7,40 @@ const exphbs = require('express-handlebars')
 app.use(express.static('public'))
 
 // setting dynamic view
-app.engine('handlebars', exphbs({defaultLayout: 'main'}))
+app.engine('handlebars', exphbs(
+  // handlebars configuration
+  {
+    defaultLayout: 'main', //where the template is
+    partialsDir: 'views/partials'
+  }
+))
 app.set('view engine', 'handlebars')
 
 // listening for request
 // get route/path
 // send only take json objects. sendfile takes html
 app.get('/', function(req, res) {
-  res.render('index')
-})
+  // this will be your search through db
+  var user = {
+    name: 'Rebecca',
+    email: 'rebeccatay92@gmail.com',
+    isAdmin: false
+  }
+  var blogs = [
+    {
+      title: 'My blogpost',
+      content: 'Here\'s my blogpost'
+    },
+    {
+      title: 'Second blogpost',
+      content: 'This is the second post'
+    }
+  ]
+  res.render('index', {
+    user: user,
+    blogs: blogs
+  })
+}) //close .get
 app.get('/about', function(req, res) {
   res.render('about')
 })
